@@ -7,7 +7,6 @@
  * 
  */
 function waitForPromise(promise, action){
-  /* IMPLEMENT ME */
 }
 /**
  * 
