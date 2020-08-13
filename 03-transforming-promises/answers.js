@@ -9,6 +9,14 @@
 function mapPromise(promise, transformer){
   return new Promise((resolve, reject) => {
     /* IMPLEMENT ME!! */
+    promise.then((result) => {
+      const value = transformer(result);
+      if (value) {
+        resolve(value);
+      } else {
+        reject(value);
+      }
+    }).catch((e) => reject(e));
   });
 }
 
@@ -19,9 +27,20 @@ function mapPromise(promise, transformer){
  * @param {Promise<number | string>} numberPromise 
  * @returns {Promise<number>}
  */
-function squarePromise(numberPromise){
-  return numberPromise
-    .then(/* IMPLEMENT ME! */);
+function squarePromise(numberPromise) {
+  const onFulfilled = (value) => { 
+    if (typeof value === 'string') {
+      let numeric = parseInt(value);
+      if (isNaN(numeric)) {
+          throw `Cannot convert '${value}' to a number!`;
+      }
+      return numeric * numeric;
+    }
+    if (typeof value === 'number') {
+      return value * value;
+    }
+  }
+  return numberPromise.then(onFulfilled);
 }
 
 /**
@@ -30,9 +49,9 @@ function squarePromise(numberPromise){
  * @param {Promise<number | string>} numberPromise 
  * @returns {Promise<number>}
  */
-function squarePromiseOrZero(promise){
+function squarePromiseOrZero(promise) {
   return squarePromise(promise)
-    .catch(/* IMPLEMENT ME! */);
+    .catch(() => 0);
 }
 
 /**
@@ -42,7 +61,7 @@ function squarePromiseOrZero(promise){
  * @returns {Promise}
  */
 function switcheroo(promise){
-  return promise.then(/* IMPLEMENT ME */);
+  return promise.then((res) => {throw res}, (res) => {return res});
 }
 
 /**
@@ -61,3 +80,14 @@ module.exports = {
   squarePromiseOrZero,
   switcheroo,
 };
+
+// function squarePromise(numberPromise){
+//   return numberPromise
+//     .then(function (res){
+//       return new Promise((resolve,reject)=>{
+//         if (!isNaN(res)) {
+//           resolve(res*res)
+//         } else {
+//           reject (`Cannot convert '${res}' to a number!`)
+//         }
+// }

@@ -6,7 +6,9 @@
  * @param {thunk} action
  * 
  */
-function waitForPromise(promise, action){
+function waitForPromise(promise, action) {
+  promise.then(action)
+  .catch();
 }
 /**
  * 
@@ -18,6 +20,8 @@ function waitForPromise(promise, action){
  */
 function consumePromise(promise, consumer, handler){
   /* IMPLEMENT ME! */
+  promise.then(consumer)
+  .catch(handler);
 }
 
 /**

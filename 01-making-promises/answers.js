@@ -55,6 +55,7 @@ function makeDelayPromise(value, delayInMs){
       resolve(value);
     }, delayInMs);
   });
+  // setTimeout(reslove, delayInMs, value); // same like above, other syntax.
 }
 
 module.exports = {
