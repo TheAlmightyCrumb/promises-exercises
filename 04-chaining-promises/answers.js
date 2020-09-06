@@ -35,17 +35,17 @@ function chainTwoAsyncProcesses(firstPromise, slowAsyncProcess){
  * @param {function} getUserById 
  * @param {function} getOrganizationById 
  */
-function makeGetUserByIdWithOrganization(getUserById, getOrganizationById){
-  return function getUserByIdWithOrganization(userId){
-    getUserById(userId).then((res) => getOrganizationById(res))
-      const res = getUserById(userId);
-      if (res) {
-        if (res.organizationId) {
-          res.organization = getOrganizationById(res.organizationId);
+function makeGetUserByIdWithOrganization(getUserById, getOrganizationById) {
+  return function getUserByIdWithOrganization(userId) {
+    return getUserById(userId)
+      .then(user => { 
+        if (user) {
+          return  getOrganizationById(user.organizationId)
+            .then(organization => {
+              return { ...user, organization }
+            });
         }
-        return res;
-      }
-        return undefined;
+    });
   }
 }
 
