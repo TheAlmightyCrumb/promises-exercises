@@ -40,7 +40,7 @@ function makeGetUserByIdWithOrganization(getUserById, getOrganizationById) {
     return getUserById(userId)
       .then(user => { 
         if (user) {
-          return  getOrganizationById(user.organizationId)
+          return getOrganizationById(user.organizationId)
             .then(organization => {
               return { ...user, organization }
             });
